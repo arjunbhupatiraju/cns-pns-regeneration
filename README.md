@@ -1,95 +1,111 @@
-CNS–PNS Regeneration Analysis
+# Single-Cell CNS–PNS Injury Analysis
 
-This repository contains a single-cell RNA sequencing analysis comparing injury responses in the central nervous system (CNS) and peripheral nervous system (PNS). The project investigates why peripheral nerves regenerate more effectively than central nervous system tissue and searches for transitional cell states and genes associated with regenerative versus chronic-injury outcomes.
+This repository supports the manuscript:
 
-Research question
+**Single-Cell Analysis Reveals Shared Fate-Intermediate Architecture but Divergent Plasticity Across Peripheral and Central Nervous System Injury**
 
-Can single-cell trajectory analysis identify a plastic, fate-uncertain intermediate state that helps explain the difference between successful PNS regeneration and limited CNS repair?
+This study compares injury-responsive Schwann cells and microglia across three public mouse single-cell or single-nucleus RNA-sequencing datasets.
 
-Datasets
+## Research question
 
-CNS: GSE172167
+Do the peripheral and central nervous systems contain comparable fate-intermediate cellular architectures, and are those states associated with different levels of transcriptional plasticity?
 
-PNS: GSE198582
+## Datasets
 
-The raw datasets are not stored in this repository. Download them from NCBI GEO using the accession links above.
+- **PNS discovery:** [GSE198582](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE198582)
+- **CNS discovery:** [GSE172167](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE172167)
+- **Independent CNS validation:** [GSE162610](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE162610)
 
-Analysis overview
+The raw datasets are not stored in this repository. They can be downloaded from NCBI GEO using the accession links above.
 
-The Colab notebook includes:
+## Analysis overview
 
-Quality control and preprocessing of CNS and PNS single-cell data
+The Google Colab notebook includes:
 
-Dimensionality reduction, neighborhood graph construction, Leiden clustering, and PAGA analysis
+1. Quality control and preprocessing of all three datasets
+2. PNS Schwann-cell discovery using CytoTRACE-informed CellRank modeling
+3. CNS compartment screening and activated-microglia discovery analysis
+4. Independent CNS validation using a sparse two-endpoint absorption model
+5. Identification of probability-balanced, high-entropy intermediate populations
+6. Sample- or library-stratified neighborhood-coherence permutation tests
+7. Graph-connectedness and endpoint-distance analyses
+8. Replicate-aware CytoTRACE comparisons
+9. Cross-system comparison across 15,477 shared genes
+10. Candidate evaluation for *Apoe*, *Gas7*, and *Timp2*
+11. Main and supplementary figure generation
 
-CytoTRACE-based estimation of developmental plasticity
+## Main tools
 
-CellRank-based fate-probability and terminal-state analysis
+- Python
+- Google Colab
+- Scanpy
+- AnnData
+- CellRank
+- CytoTRACE
+- NumPy
+- pandas
+- SciPy
+- igraph
+- Matplotlib
 
-Identification of high-entropy, approximately balanced fate-decision regions
+## Repository contents
 
-Candidate gene analysis comparing alternative lineage outcomes
+- `*.ipynb` — complete Google Colab analysis notebook
+- `README.md` — project description and reproduction instructions
 
-Robustness checks using multiple probability thresholds, sample support, neighborhood coherence, and permutation tests
+Large raw datasets and intermediate AnnData objects are excluded because they can be reconstructed from the cited GEO datasets.
 
-Figure and processed-object export
+## How to run
 
-Main tools
+1. Open the `.ipynb` notebook on GitHub.
+2. Select **Open in Colab**, or download the notebook and upload it to [Google Colab](https://colab.research.google.com/).
+3. Download the three datasets from NCBI GEO.
+4. Update the input and output paths to match your Google Drive folders.
+5. Run the notebook cells sequentially from the beginning.
 
-Python
+Single-cell analysis can require substantial memory. A high-RAM Colab runtime may be necessary.
 
-Google Colab
+## Reproducibility
 
-Scanpy
+- The analyses used random seed 42.
+- The primary software environment contained:
+  - Python 3.12
+  - NumPy 2.4.6
+  - SciPy 1.16.3
+  - pandas 2.3.3
+  - AnnData 0.13.2
+  - Scanpy 1.12.2
+  - CellRank 2.3.2
+  - igraph 1.0.0
+- Keep the random seed, downsampling procedures, endpoint orientation, and probability thresholds fixed when reproducing the reported results.
+- Results may vary if package versions, dataset annotations, preprocessing thresholds, or random seeds are changed.
 
-AnnData
+## Interpretation
 
-CellRank
+The trajectory probabilities represent computational endpoint associations and not direct lineage observations. Schwann cells and microglia differ in developmental origin and biological function. Therefore, the analysis compares injury-responsive state architectures rather than asserting direct cellular equivalence.
 
-CytoTRACE
+## Project status
 
-NumPy, pandas, SciPy, and Matplotlib
+The discovery, robustness, independent-validation, and manuscript analyses are complete for the preprint version. Future versions may incorporate revisions made during peer review.
 
-Repository contents
+## Data and code availability
 
-*.ipynb — complete Google Colab analysis notebook
+The source data are publicly available through GEO under GSE198582, GSE172167, and GSE162610. The analysis code is provided in this repository.
 
-README.md — project description and usage instructions
+## Author
 
-Large raw datasets, intermediate AnnData objects, and generated outputs are excluded from GitHub because of file-size constraints.
+Arjun Bhupatiraju  
+Independent Researcher  
+Austin, Texas, United States
 
-How to run
+## Funding
 
-Open the .ipynb file in GitHub.
+No external funding supported this work.
 
-Click Open in Colab if the button appears. Alternatively, download the notebook and upload it at Google Colab.
+## Competing interests
 
-Download the two datasets from NCBI GEO.
+The author declares no relevant financial or non-financial competing interests.
 
-Update the notebook's input and output paths to match your Google Drive folders.
-
-Run the cells in order from the beginning.
-
-Because single-cell analysis can be memory intensive, a Colab runtime with additional RAM may be necessary.
-
-Reproducibility notes
-
-Run the notebook sequentially because later cells depend on objects produced earlier.
-
-Package versions are printed or installed within the notebook where applicable.
-
-Random seeds and downsampling should be kept fixed when reproducing trajectory results.
-
-Results may vary if package versions, preprocessing thresholds, or dataset annotations change.
-
-Project status
-
-This is an active research project. The analysis and interpretation may be revised as robustness testing and independent validation are completed.
-
-Author
-
-Arjun Bhupatiraju
-
-License and data use
+## License and data use
 
 No license has currently been assigned to the code. The original datasets remain subject to the terms established by their respective authors and repositories.
